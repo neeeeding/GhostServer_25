@@ -38,7 +38,7 @@ namespace _01Script.Networking
 
         private void HandleClientConnectCallback(ulong clientID)
         {
-            Debug.Log($"{clientID} is disconnected");  
+            //Debug.Log($"{clientID} is disconnected");  
         }
     }
 }

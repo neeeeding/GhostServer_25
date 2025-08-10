@@ -35,7 +35,7 @@ namespace _01Script.Networking
             string joinCode = codeInput.text;
             if(string.IsNullOrEmpty(joinCode)) return;
 
-            bool result = await ClientSingleton.Instance.GameManager.StartClientWithJoinCode(joinCode);
+            await ClientSingleton.Instance.GameManager.StartClientWithJoinCode(joinCode);
         }
     }
 

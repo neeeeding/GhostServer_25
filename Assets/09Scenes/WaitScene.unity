@@ -895,6 +895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   code: {fileID: 1674559784}
+  people: {fileID: 290455391}
 --- !u!114 &1605664573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1394,6 +1395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b0c4afdca7a0d041b65ef3fd1faca55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   startUI: {fileID: 397645065}
 --- !u!1 &2102360892
 GameObject:

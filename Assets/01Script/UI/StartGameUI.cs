@@ -2,6 +2,7 @@ using System;
 using _01Script.Networking;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace _01Script.UI
 {
@@ -47,7 +48,7 @@ namespace _01Script.UI
             {
                 if (Input.GetKeyDown(KeyCode.F))
                 {
-                    HostSingleton.Instance.GameManager.ChangeNetworkScene(SceneNames.GameScene);
+                    NetworkManager.Singleton.SceneManager.LoadScene(SceneNames.GameScene, LoadSceneMode.Single);
                 }
             }
         }
