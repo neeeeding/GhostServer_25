@@ -7,6 +7,8 @@ namespace _01Script.Game
 {
     public class RandomPosition : NetworkBehaviour
     {
+        public static Action<RandomPosition> OnPos;
+        
         [Header("Need")]
         [SerializeField] private GameObject map;
 
@@ -15,8 +17,18 @@ namespace _01Script.Game
 
         private void Awake()
         {
+            SpriteRenderer sprite = map.GetComponent<SpriteRenderer>();
             _mapCenter = map.transform.position;
-            _mapSize = map.transform.localScale/2;
+            _mapSize = sprite.bounds.size/2;
+            
+            OnPos?.Invoke(this);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            
+            Gizmos.DrawWireCube(_mapCenter, _mapSize*2);
         }
 
         public void SetPosition(GameObject obj)
@@ -28,14 +40,6 @@ namespace _01Script.Game
             Vector2 pos = new Vector2(x, y);
             
             obj.transform.localPosition = pos;
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if (other.CompareTag("Player"))
-            {
-                SetPosition(other.gameObject);
-            }
         }
     }
 }

@@ -21,6 +21,13 @@ namespace _01Script.Networking
             set { _joinCode = value; }
         }
 
+        public async void ResetAll()
+        {
+            _relayAllocation = await RelayService.Instance.CreateAllocationAsync(MaxCount);
+            _joinCode = await RelayService.Instance.GetJoinCodeAsync(_relayAllocation.AllocationId);
+
+        }
+
         public async Task<bool> StartHostAsync()
         {
             try

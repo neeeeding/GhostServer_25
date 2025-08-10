@@ -14,6 +14,21 @@ namespace _01Script.Networking
             LaunchInMode(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
         }
 
+        public async void ReSetAll()
+        {
+            GameObject n = new GameObject();
+            n.AddComponent<ApplicationController>();
+            n.GetComponent<ApplicationController>().ReLaunchInMode();
+            Instantiate(n, transform);
+            n.name = "ApplicationController";
+            Destroy(gameObject);
+        }
+
+        public void ReLaunchInMode()
+        {
+            LaunchInMode(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null);
+        }
+
         private async Task LaunchInMode(bool isDedicated)
         {
             if (isDedicated == false)

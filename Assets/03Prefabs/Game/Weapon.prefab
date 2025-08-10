@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8461961825727537184}
   - component: {fileID: 4355531245021128732}
   - component: {fileID: 4115752814627686019}
+  - component: {fileID: 8087500627803945776}
   m_Layer: 0
   m_Name: Weapon
   m_TagString: Weapon
@@ -157,10 +158,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   item: 1
-  spriteRenderer: {fileID: 9101146914722622423}
-  circleCollider: {fileID: 4355531245021128732}
-  isActive:
-    m_InternalValue: 0
+--- !u!114 &8087500627803945776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3530835075631014041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 440e4a3ac31f44eeb8a3d3a7593265c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &4635331285231687840
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,8 +247,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -4029819251187114856, guid: 29c45a8892c0068429278cca89a2f679, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

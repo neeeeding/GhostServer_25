@@ -1,4 +1,3 @@
-using System;
 using _01Script.Game;
 using _01Script.Player;
 using Unity.Netcode;
@@ -10,58 +9,37 @@ namespace _01Script.Entity
     {
         [Header("Setting")]
         [SerializeField] private ItemType item;
-        [Header("Need")]
-        [SerializeField] protected SpriteRenderer spriteRenderer;
-        [SerializeField] protected CircleCollider2D circleCollider;
 
         private ItemSpawner _spawner;
-        
-        public NetworkVariable<bool> isActive = new NetworkVariable<bool>();
-
-        private void Awake()
-        {
-            SetVisible(true);
-        }
 
         public void SetSpawner(ItemSpawner pa)
         {
             _spawner = pa;
         }
 
-        public override void OnNetworkSpawn()
-        {
-            if (IsClient)
-                SetVisible(isActive.Value);
-        }
-
-        public void SetVisible(bool isActive)
-        {
-            circleCollider.enabled = isActive;
-            spriteRenderer.enabled = isActive;
-        }
-        
         private void OnTriggerEnter2D(Collider2D other)
         {
             if (other.TryGetComponent(out HoldItem hold))
             {
                 if (IsServer)
                 {
-                    Hold(hold);   
+                    Hold(hold); 
+                    var netObj = GetComponent<NetworkObject>();
+                    if (netObj != null)
+                        netObj.Despawn();
+                    else
+                        Destroy(gameObject);
                 }
-                SetVisible(false);
+                else
+                {
+                    gameObject.SetActive(false);
+                }
             }
         }
 
         private void Hold(HoldItem hold)
         {
             hold.Set(item, this);
-        }
-
-        public void ReSpawn()
-        {
-            SetVisible(true);
-            if(!IsServer) return;
-            _spawner.Spawn(item);
         }
     }
 

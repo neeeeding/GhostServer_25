@@ -16,41 +16,41 @@ namespace _01Script.Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.TryGetComponent(out UseItem use) && other.gameObject != this.gameObject)
+            if (other.CompareTag("Player") &&
+                other.TryGetComponent(out UseItem use) && other.gameObject != this.gameObject)
             {
                 if (_holdItem.weapon.Value != 0)
                 {
                     use.Shielded();
                     
-                    Item item = _holdItem.weaponItem;
-                    if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(_holdItem.weapon.Value, out NetworkObject netObj))
-                    {
-                        item = netObj.GetComponent<Item>();
-                    }
-                    
-                    item.ReSpawn();
                     if(!IsServer) return;
                     _holdItem.Set(ItemType.Weapon);
                 }
             }
         }
 
-        private bool Shielded() //방패 가지고 있는지
+        public bool Shielded() //방패 가지고 있는지
         {
             if (_holdItem.shield.Value != 0)
             {
-                Item item = _holdItem.shieldItem;
-                if (NetworkManager.Singleton.SpawnManager.SpawnedObjects.TryGetValue(_holdItem.shield.Value, out NetworkObject netObj))
-                {
-                    item = netObj.GetComponent<Item>();
-                }
-                
-                item.ReSpawn();
                 if(!IsServer) return true;
                 _holdItem.Set(ItemType.Shield);
                 return true;
             }
-            gameObject.SetActive(false);
+            if (IsServer)
+            {
+                GetComponent<Winner>().Lose();
+                
+                var netObj = GetComponent<NetworkObject>();
+                if (netObj != null)
+                    netObj.Despawn();
+                else
+                    Destroy(gameObject);
+            }
+            else
+            {
+                //gameObject.SetActive(false);
+            }
             return false;
         }
     }

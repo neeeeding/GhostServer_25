@@ -11,45 +11,41 @@ namespace _01Script.Game
         [SerializeField] private GameObject shieldPrefabs;
         [SerializeField] private RandomPosition map;
 
-        private Item _weapon;
-        private Item _shield;
+        private int _maxCount;
 
         private void Start()
         {
             if (!IsServer) return;
 
-            _weapon = Instantiate(weaponPrefabs).GetComponent<Item>();
-            _shield = Instantiate(shieldPrefabs).GetComponent<Item>();
+            _maxCount = NetworkManager.Singleton.ConnectedClients.Count;
             
-            _weapon.SetSpawner(this);
-            _shield.SetSpawner(this);
-            
-            _weapon.SetVisible(true);
-            _shield.SetVisible(true);
-
-            Spawn(ItemType.Weapon);
-            Spawn(ItemType.Shield);
-
-            _weapon.NetworkObject.Spawn();
-            _shield.NetworkObject.Spawn();
-
+            StartSpawn();
         }
 
-        public void Spawn(ItemType item)
+        private void StartSpawn()
         {
-            switch (item)
+            for (int i = 0; i < _maxCount; i++)
             {
-                case ItemType.Weapon:
-                    _weapon.gameObject.SetActive(true);
-                    if(IsServer)
-                        map.SetPosition(_weapon.gameObject);
-                    break;
-                case ItemType.Shield:
-                    _shield.gameObject.SetActive(true);
-                    if(IsServer)
-                        map.SetPosition(_shield.gameObject);
-                    break;
+                
+               GameObject weapon = Instantiate(weaponPrefabs);
+               GameObject shield = Instantiate(shieldPrefabs);
+            
+                weapon.GetComponent<Item>().SetSpawner(this);
+                shield.GetComponent<Item>().SetSpawner(this);
+
+                Spawn(weapon);
+                Spawn(shield);
+
+                weapon.GetComponent<Item>().NetworkObject.Spawn();
+                shield.GetComponent<Item>().NetworkObject.Spawn();
             }
+        }
+
+        private void Spawn(GameObject item)
+        {
+            item.gameObject.SetActive(true);
+            if(IsServer)
+                map.SetPosition(item.gameObject);
         }
     }
 }
