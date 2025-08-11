@@ -1,5 +1,6 @@
 using System;
 using _01Script.Networking;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,13 +10,13 @@ namespace _01Script.UI
     public class StartGameUI : NetworkBehaviour
     {
         [Header("Need")]
-        [SerializeField] private GameObject startUI;
+        [SerializeField] private TextMeshProUGUI startUI;
 
         private bool _isEnter;
         
         private void Awake()
         {
-            startUI.SetActive(false);
+            startUI.gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D other)
@@ -24,7 +25,8 @@ namespace _01Script.UI
             {
                 if (netObj.IsOwner) 
                 {
-                    startUI.SetActive(true);
+                    startUI.text = netObj.IsServer ? "F를 눌러 시작하기" : "방장만 시작할 수 있습니다.";
+                    startUI.gameObject.SetActive(true);
                     _isEnter = true;
                 }
             }
@@ -36,7 +38,7 @@ namespace _01Script.UI
             {
                 if (netObj.IsOwner) 
                 {
-                    startUI.SetActive(false);
+                    startUI.gameObject.SetActive(false);
                     _isEnter = false;
                 }
             }

@@ -10,14 +10,11 @@ namespace _01Script.Game
 {
     public class EnemySpawner : NetworkBehaviour
     {
-        [Header("Setting")] [SerializeField] private int delay = 3;
-        [Header("Need")] [SerializeField] private GameObject enemyPrefabs;
+        [Header("Setting")]
+        [SerializeField] private int delay = 3;
+        [Header("Need")]
+        [SerializeField] private GameObject enemyPrefabs;
         [SerializeField] private RandomPosition map;
-
-        private int _maxCount = 30;
-
-        public NetworkVariable<int> _curCount = new NetworkVariable<int>(0);
-
         
         private CancellationTokenSource cts;
         private void Start()
@@ -31,7 +28,7 @@ namespace _01Script.Game
         {
             try
             {
-                for (_curCount.Value = 1; _curCount.Value <= _maxCount; _curCount.Value++)
+                while (true)
                 {
                     token.ThrowIfCancellationRequested();
 
@@ -44,9 +41,8 @@ namespace _01Script.Game
                     await Task.Delay(delay * 1000, token);
                 }
             }
-            catch (OperationCanceledException)
+            catch (OperationCanceledException) //씬 전환
             {
-                // 씬 전환 등으로 취소됨
             }
         }
 

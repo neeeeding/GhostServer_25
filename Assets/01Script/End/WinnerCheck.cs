@@ -18,6 +18,12 @@ namespace _01Script.End
         private void OnEnable()
         {
             Winner.OnCheck += Check;
+            
+            if(text == null) return;
+            if (NetworkManager.Singleton.ConnectedClients.Count <2)
+            {
+                text.text = "혼자서 하셨군요.";
+            }
         }
 
         private void OnDisable()
@@ -74,8 +80,10 @@ namespace _01Script.End
         
         private void Check(Winner winner)
         {
+            if(text == null) return;
+            
             _winner = winner;
-
+            
             if (!winner.IsOwner)
             {
                 text.text = "졌습니다.";
